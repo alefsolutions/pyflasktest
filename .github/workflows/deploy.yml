@@ -39,10 +39,21 @@ jobs:
 
       - name: Download existing task definition
         run: |
-          aws ecs describe-task-definition \
+            aws ecs describe-task-definition \
             --task-definition simple-test-task \
-            --query taskDefinition \
-            --output json > task-def.json
+            --query 'taskDefinition | {
+                family,
+                taskRoleArn,
+                executionRoleArn,
+                networkMode,
+                containerDefinitions,
+                requiresCompatibilities,
+                cpu,
+                memory,
+                tags,
+                volumes,
+                placementConstraints
+            }' > task-def.json
 
       - name: Inject new image URI into task definition
         run: |
