@@ -1,0 +1,29 @@
+{
+  "family": "simple-test-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::905364407756:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "test-repo",
+      "image": "905364407756.dkr.ecr.ap-southeast-2.amazonaws.com/test-repo:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/simple-test-task",
+          "awslogs-region": "ap-southeast-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
